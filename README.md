@@ -13,17 +13,16 @@ AresBomb is an SMS / Call bomber with nice features and auto updates
 # Installation
 
 #### For Termux
-`` `sh
+sh
 pkg install git
 pkg install python
 pip install requests
-git clone https://github.com/MaksPV/AresBomb
-`` ``
+git clone https://github.com/wachirachoomsiri/AresBomb.git
 
 # Launch
-`` `sh
+
 python AresBomb / boom.py
-`` ``
+
 
 # References
 * [t.me/AresBomb.BIZ(telete.in/AresBomb) - Telegram channel on which project news
